@@ -16,4 +16,4 @@
     limitations under the License.
 
 -->
-Dear ${headers.lastName}, ${headers.firstName}. ${body}
+Dear ${headers.name}. You ordered item ${exchange.properties.item} on ${body}.

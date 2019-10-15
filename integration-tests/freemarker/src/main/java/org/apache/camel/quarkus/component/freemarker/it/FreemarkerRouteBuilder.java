@@ -16,13 +16,28 @@
  */
 package org.apache.camel.quarkus.component.freemarker.it;
 
+import org.apache.camel.Exchange;
+import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 
 
 public class FreemarkerRouteBuilder extends RouteBuilder {
     @Override
     public void configure() {
-        from("direct:template")
-                .to("freemarker:file:src/test/resources/template.ftl");
+        from("direct:a")
+                .log("Headers Name: ${headers.name}")
+                .log("Body: ${body}")
+                .log("Exchange: ${exchange}")
+//                .log("Exchange Properties: ${exchange.properties}")
+//                .log("Exchange Properties Item: ${properties.item}")
+                .process(new Processor() {
+                    @Override
+                    public void process(Exchange exchange) throws Exception {
+                        Object item = exchange.getProperties().get("item");
+                        System.out.println("item essssssssssssss:" + item);
+                    }
+                })
+                .to("freemarker:file:src/test/resources/org/apache/camel/component/freemarker/example.ftl")
+                .log("${body}");
     }
 }

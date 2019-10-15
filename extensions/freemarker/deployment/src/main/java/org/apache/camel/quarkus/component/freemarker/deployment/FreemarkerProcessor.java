@@ -18,9 +18,17 @@ package org.apache.camel.quarkus.component.freemarker.deployment;
 
 import freemarker.ext.jython.JythonModel;
 import freemarker.ext.jython.JythonWrapper;
+import io.quarkus.builder.item.BuildItem;
 import io.quarkus.deployment.annotations.BuildStep;
+import io.quarkus.deployment.annotations.ExecutionTime;
+import io.quarkus.deployment.annotations.Record;
 import io.quarkus.deployment.builditem.FeatureBuildItem;
 import io.quarkus.deployment.builditem.substrate.RuntimeInitializedClassBuildItem;
+import org.apache.camel.component.freemarker.FreemarkerEndpoint;
+import org.apache.camel.component.freemarker.FreemarkerEndpointConfigurer;
+import org.apache.camel.quarkus.core.deployment.CamelRuntimeBuildItem;
+import org.apache.camel.quarkus.core.runtime.CamelRecorder;
+import org.apache.camel.quarkus.core.runtime.CamelRuntime;
 
 class FreemarkerProcessor {
     private static final String FEATURE = "camel-freemarker";
@@ -39,5 +47,17 @@ class FreemarkerProcessor {
     RuntimeInitializedClassBuildItem jythonWrapper() {
         return new RuntimeInitializedClassBuildItem(JythonWrapper.class.getCanonicalName());
     }
+
+//    @BuildStep
+//    @Record(ExecutionTime.RUNTIME_INIT)
+//    CamelRuntimeBuildItem freemarkerEndpoint(CamelRecorder recorder) {
+//        recorder.addBuilder();
+//        CamelRuntime value = runtime.getRuntime().getValue();
+//        try {
+//            value.getContext().addEndpoint("freemarker", new FreemarkerEndpoint());
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
 }
